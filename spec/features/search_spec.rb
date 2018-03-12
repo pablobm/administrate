@@ -62,7 +62,7 @@ feature "Search" do
   end
 
   def page_params
-    URI.parse(page.current_url).query
+    CGI.unescape(URI.parse(page.current_url).query)
   end
 
   def submit_search
