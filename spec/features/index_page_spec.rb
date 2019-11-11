@@ -81,8 +81,12 @@ describe "customer index page" do
 
   describe "sorting" do
     def expect_to_appear_in_order(*elements)
-      positions = elements.map { |e| page.body.index(e) }
-      expect(positions).to eq(positions.sort)
+      positions_to_elements = elements.each_with_object({}) do |el, hash|
+        hash[page.body.index(el)] = el
+      end
+      elements_in_page_order = positions_to_elements.keys.sort.map { |pos| positions_to_elements[pos] }
+      expect(elements_in_page_order).not_to include(nil)
+      expect(elements_in_page_order).to eq(elements)
     end
 
     it "allows sorting by columns" do
