@@ -127,6 +127,26 @@ describe "customer index page" do
 
       expect(find(search_input_selector).value).to eq(query)
     end
+
+    it "sorts has_many relationships by number of records, by default" do
+      c1 = create(:customer, orders: create_list(:order, 2))
+      c2 = create(:customer, orders: create_list(:order, 1))
+      c3 = create(:customer, orders: create_list(:order, 5))
+      c4 = create(:customer, orders: create_list(:order, 3))
+      c5 = create(:customer, orders: create_list(:order, 4))
+
+      visit admin_customers_path
+
+      within 'table thead' do
+        click_on "Orders"
+      end
+      expect_to_appear_in_order(c2.name, c1.name, c4.name, c5.name, c3.name)
+
+      within 'table thead' do
+        click_on "Orders"
+      end
+      expect_to_appear_in_order(c3.name, c5.name, c4.name, c1.name, c2.name)
+    end
   end
 end
 
