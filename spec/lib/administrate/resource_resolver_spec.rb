@@ -4,6 +4,16 @@ require "support/constant_helpers"
 require "administrate/resource_resolver"
 
 describe Administrate::ResourceResolver do
+  before do
+    module Library; class User; end; end
+    class User; end
+  end
+
+  after do
+    remove_constants :Library
+    remove_constants :User
+  end
+
   describe "#dashboard_class" do
     it "handles global-namepsace models" do
       begin
@@ -18,44 +28,43 @@ describe Administrate::ResourceResolver do
 
     it "handles namespaced models" do
       begin
-        module Library; class BookDashboard; end; end
-        resolver = Administrate::ResourceResolver.new("admin/library/books")
+        module Library; class UserDashboard; end; end
+        resolver = Administrate::ResourceResolver.new("admin/library/user")
 
-        expect(resolver.dashboard_class).to eq(Library::BookDashboard)
-      ensure
-        remove_constants :Library
+        expect(resolver.dashboard_class).to eq(Library::UserDashboard)
       end
     end
   end
 
   describe "#namespace" do
-    it "returns the top-level namespace" do
-      resolver = Administrate::ResourceResolver.new("foobar/user")
+    it "detects the namespace" do
+      resolver = Administrate::ResourceResolver.new("management/library/users")
 
-      expect(resolver.namespace).to eq("foobar")
+      expect(resolver.namespace).to eq("management")
+    end
+
+    it "detects that there is no namespace" do
+      resolver = Administrate::ResourceResolver.new("users")
+
+      expect(resolver.namespace).to be_nil
     end
   end
 
   describe "#resource_class" do
     it "handles global-namepsace models" do
       begin
-        class User; end
         resolver = Administrate::ResourceResolver.new("admin/users")
 
         expect(resolver.resource_class).to eq(User)
-      ensure
-        remove_constants :User
       end
     end
 
     it "handles namespaced models" do
       begin
-        module Library; class Book; end; end
-        resolver = Administrate::ResourceResolver.new("admin/library/books")
+        module Library; class User; end; end
+        resolver = Administrate::ResourceResolver.new("admin/library/user")
 
-        expect(resolver.resource_class).to eq(Library::Book)
-      ensure
-        remove_constants :Library
+        expect(resolver.resource_class).to eq(Library::User)
       end
     end
   end
@@ -68,9 +77,9 @@ describe Administrate::ResourceResolver do
     end
 
     it "handles namespaced models" do
-      resolver = Administrate::ResourceResolver.new("admin/library/books")
+      resolver = Administrate::ResourceResolver.new("admin/library/user")
 
-      expect(resolver.resource_title).to eq("Library Book")
+      expect(resolver.resource_title).to eq("Library User")
     end
   end
 
@@ -82,9 +91,19 @@ describe Administrate::ResourceResolver do
     end
 
     it "handles namespaced models" do
-      resolver = Administrate::ResourceResolver.new("admin/library/books")
+      resolver = Administrate::ResourceResolver.new("admin/library/user")
 
-      expect(resolver.resource_name).to eq(:library__book)
+      expect(resolver.resource_name).to eq(:library__user)
+    end
+
+    it "respects plural namespaces" do
+      begin
+        module Managers; class Owner; end end
+        resolver = Administrate::ResourceResolver.new("admins/managers/owner")
+        expect(resolver.resource_name).to eq(:managers__owner)
+      ensure
+        remove_constants :Managers
+      end
     end
   end
 end

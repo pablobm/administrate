@@ -18,7 +18,7 @@ module Administrate
             attr
           end
         related_dashboard_attributes =
-          Administrate::ResourceResolver.new("admin/#{associated_class_name}").
+          Administrate::ResourceResolver.new("admin/#{associated_class_name.to_s.underscore}").
             dashboard_class.new.permitted_attributes + [:id]
 
         { "#{attr}_attributes": related_dashboard_attributes }
@@ -28,7 +28,7 @@ module Administrate
 
       def resolver
         @resolver ||=
-          Administrate::ResourceResolver.new("admin/#{associated_class_name}")
+          Administrate::ResourceResolver.new("admin/#{associated_class_name.to_s.underscore}")
       end
     end
   end
