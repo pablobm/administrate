@@ -92,7 +92,7 @@ module Administrate
     end
 
     def after_resource_created_path(requested_resource)
-      [namespace, requested_resource]
+      [namespace, controlled_resource_for(requested_resource)]
     end
 
     def after_resource_updated_path(requested_resource)
@@ -126,6 +126,12 @@ module Administrate
       existing_action?(resource, action_name)
     end
     helper_method :valid_action?
+
+    def controlled_resource?(resource)
+      !!routes.detect do |controller, _action|
+        controller == resource.model_name.name.underscore.pluralize
+      end
+    end
 
     def routes
       @routes ||= Namespace.new(namespace).routes.to_set
@@ -180,7 +186,7 @@ module Administrate
     end
 
     def requested_resource
-      @requested_resource ||= find_resource(params[:id]).tap do |resource|
+      @requested_resource ||= controlled_resource_for(find_resource(params[:id])).tap do |resource|
         authorize_resource(resource)
       end
     end
@@ -238,6 +244,15 @@ module Administrate
         resource: resource_resolver.resource_title,
       )
     end
+
+    def controlled_resource_for(resource)
+      if controlled_resource?(resource)
+        resource
+      else
+        controlled_resource_for(resource.becomes(resource.class.module_parent))
+      end
+    end
+    helper_method :controlled_resource_for
 
     def show_search_bar?
       dashboard.attribute_types_for(
