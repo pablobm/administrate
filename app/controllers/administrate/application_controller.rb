@@ -46,7 +46,7 @@ module Administrate
 
       if resource.save
         redirect_to(
-          [namespace, resource],
+          [namespace, controlled_resource_for(resource)],
           notice: translate_with_resource("create.success"),
         )
       else
@@ -92,6 +92,12 @@ module Administrate
       end
     end
 
+    def controlled_resource?(resource)
+      !!routes.detect do |controller, _action|
+        controller == resource.model_name.name.underscore.pluralize
+      end
+    end
+
     def routes
       @routes ||= Namespace.new(namespace).routes
     end
@@ -112,7 +118,7 @@ module Administrate
     end
 
     def requested_resource
-      @requested_resource ||= find_resource(params[:id]).tap do |resource|
+      @requested_resource ||= controlled_resource_for(find_resource(params[:id])).tap do |resource|
         authorize_resource(resource)
       end
     end
@@ -165,6 +171,15 @@ module Administrate
         resource: resource_resolver.resource_title,
       )
     end
+
+    def controlled_resource_for(resource)
+      if controlled_resource?(resource)
+        resource
+      else
+        controlled_resource_for(resource.becomes(resource.class.module_parent))
+      end
+    end
+    helper_method :controlled_resource_for
 
     def show_search_bar?
       dashboard.attribute_types_for(
