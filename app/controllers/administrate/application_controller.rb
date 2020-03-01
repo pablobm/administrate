@@ -187,7 +187,7 @@ module Administrate
     end
 
     def paginate(records, page_number:, page_size:)
-      records.page(page_number).per(page_size)
+      Administrate::ResourcePaginator.new(records).paginate(page_number: page_number, page_size: page_size)
     end
   end
 end
