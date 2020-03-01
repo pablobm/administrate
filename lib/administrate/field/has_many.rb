@@ -40,7 +40,7 @@ module Administrate
       end
 
       def resources(page = 1, order = self.order)
-        resources = order.apply(data).page(page).per(limit)
+        resources = paginate(order.apply(data), page_number: page, page_size: limit)
         includes.any? ? resources.includes(*includes) : resources
       end
 
@@ -88,6 +88,10 @@ module Administrate
 
       def direction
         options[:direction]
+      end
+
+      def paginate(records, page_number:, page_size:)
+        records.page(page_number).per(page_size)
       end
     end
   end
