@@ -7,12 +7,12 @@ describe "fields/has_one/_show", type: :view do
       has_one = instance_double(
         "Administrate::Field::HasOne",
         display_associated_resource: "",
-        data: nil,
+        data: nil
       )
 
       render(
         partial: "fields/has_one/show.html.erb",
-        locals: { field: has_one },
+        locals: {field: has_one}
       )
 
       expect(rendered.strip).to eq("")
@@ -27,7 +27,7 @@ describe "fields/has_one/_show", type: :view do
         "Administrate::Field::HasOne",
         display_associated_resource: product.name,
         data: product,
-        nested_form: nested_form,
+        nested_form: nested_form
       )
 
       render(
@@ -35,8 +35,8 @@ describe "fields/has_one/_show", type: :view do
         locals: {
           field: has_one,
           namespace: "admin",
-          resource_name: "product_meta_tag",
-        },
+          resource_name: "product_meta_tag"
+        }
       )
 
       link = "<a href=\"#{product_path}\">#{product.name}</a>"
@@ -51,14 +51,14 @@ describe "fields/has_one/_show", type: :view do
       instance_double(
         "Administrate::Page::Show",
         resource: double(
-          class: ProductMetaTag,
+          class: ProductMetaTag
         ),
         attributes: [double(
           html_class: "string",
           name: "meta_title",
-          data: "Very Nice Title",
+          data: "Very Nice Title"
         )],
-        resource_name: "Product Tag",
+        resource_name: "Product Tag"
       )
     end
   end

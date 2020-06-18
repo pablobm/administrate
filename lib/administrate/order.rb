@@ -59,10 +59,10 @@ module Administrate
     end
 
     def order_by_count(relation)
-      relation.
-        left_joins(attribute.to_sym).
-        group(:id).
-        reorder("COUNT(#{attribute}.id) #{direction}")
+      relation
+        .left_joins(attribute.to_sym)
+        .group(:id)
+        .reorder("COUNT(#{attribute}.id) #{direction}")
     end
 
     def order_by_id(relation)

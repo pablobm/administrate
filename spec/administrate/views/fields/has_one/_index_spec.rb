@@ -7,7 +7,7 @@ describe "fields/has_one/_index", type: :view do
 
       render(
         partial: "fields/has_one/index.html.erb",
-        locals: { field: has_one },
+        locals: {field: has_one}
       )
 
       expect(rendered.strip).to eq("")
@@ -21,12 +21,12 @@ describe "fields/has_one/_index", type: :view do
       has_one = instance_double(
         "Administrate::Field::HasOne",
         data: product,
-        display_associated_resource: product.name,
+        display_associated_resource: product.name
       )
 
       render(
         partial: "fields/has_one/index.html.erb",
-        locals: { field: has_one, namespace: "admin" },
+        locals: {field: has_one, namespace: "admin"}
       )
 
       expected = "<a href=\"#{product_path}\">#{product.name}</a>"

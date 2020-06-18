@@ -30,13 +30,13 @@ RSpec.describe "customer show page" do
 
     describe(
       "when these are not a collection field" +
-      "and there's another paging association",
+      "and there's another paging association"
     ) do
       it "doesn't break" do
         orig_collection_attributes = CustomerDashboard::COLLECTION_ATTRIBUTES
         allow_any_instance_of(CustomerDashboard).to(
-          receive(:collection_attributes).
-          and_return(orig_collection_attributes - [:orders]),
+          receive(:collection_attributes)
+          .and_return(orig_collection_attributes - [:orders])
         )
 
         customer = create(:customer)
@@ -88,8 +88,8 @@ RSpec.describe "customer show page" do
     end
 
     visit admin_customer_path(customer, orders: {
-                                order: :id, direction: :desc
-                              })
+      order: :id, direction: :desc
+    })
 
     order_ids = orders.sort_by(&:id).map(&:id).reverse
 
@@ -98,8 +98,8 @@ RSpec.describe "customer show page" do
     end
 
     visit admin_customer_path(customer, orders: {
-                                order: :id, direction: :desc, page: 2
-                              })
+      order: :id, direction: :desc, page: 2
+    })
 
     within(table_for_attribute(:orders)) do
       expect(order_ids.last(2)).to eq(ids_in_table)
@@ -117,8 +117,8 @@ RSpec.describe "customer show page" do
 
     visit admin_customer_path(
       customer,
-      orders: { order: :id, direction: :desc },
-      log_entries: { order: :id, direction: :asc },
+      orders: {order: :id, direction: :desc},
+      log_entries: {order: :id, direction: :asc}
     )
 
     order_ids = orders.sort_by(&:id).map(&:id).reverse
@@ -137,8 +137,8 @@ RSpec.describe "customer show page" do
       orders: {
         order: :id,
         direction: :desc,
-        page: 2,
-      },
+        page: 2
+      }
     )
 
     within(table_for_attribute(:orders)) do
@@ -186,10 +186,10 @@ RSpec.describe "customer show page" do
       helpers: {
         label: {
           customer: {
-            email_subscriber: custom_label,
-          },
-        },
-      },
+            email_subscriber: custom_label
+          }
+        }
+      }
     }
 
     with_translations(:en, translations) do
@@ -209,16 +209,16 @@ RSpec.describe "customer show page" do
         actions: {
           edit: "Edit",
           destroy: "Destroy",
-          confirm: "Are you sure?",
-        },
+          confirm: "Are you sure?"
+        }
       },
       helpers: {
         label: {
           order: {
-            shipped_at: custom_label,
-          },
-        },
-      },
+            shipped_at: custom_label
+          }
+        }
+      }
     }
 
     with_translations(:en, translations) do

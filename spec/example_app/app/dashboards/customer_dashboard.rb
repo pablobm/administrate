@@ -17,9 +17,9 @@ class CustomerDashboard < Administrate::BaseDashboard
       foreign_key: :country_code,
       class_name: "Country",
       searchable: true,
-      searchable_fields: ["name"],
+      searchable_fields: ["name"]
     ),
-    password: Field::Password,
+    password: Field::Password
   }
 
   COLLECTION_ATTRIBUTES = ATTRIBUTE_TYPES.keys - %i[created_at updated_at]
@@ -30,11 +30,11 @@ class CustomerDashboard < Administrate::BaseDashboard
     :email_subscriber,
     :kind,
     :territory,
-    :password,
+    :password
   ].freeze
 
   COLLECTION_FILTERS = {
-    vip: ->(resources) { resources.where(kind: :vip) },
+    vip: ->(resources) { resources.where(kind: :vip) }
   }.freeze
 
   def display_resource(customer)

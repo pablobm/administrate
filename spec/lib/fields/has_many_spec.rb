@@ -18,67 +18,61 @@ describe Administrate::Field::HasMany do
 
   describe "#associated_collection" do
     it "returns an index page for the dashboard of the associated attribute" do
-      begin
-        WidgetDashboard = Class.new
-        widgets = []
-        field = Administrate::Field::HasMany.new(:widgets, widgets, :show)
+      WidgetDashboard = Class.new
+      widgets = []
+      field = Administrate::Field::HasMany.new(:widgets, widgets, :show)
 
-        page = field.associated_collection
+      page = field.associated_collection
 
-        expect(page).to be_instance_of(Administrate::Page::Collection)
-      ensure
-        remove_constants :WidgetDashboard
-      end
+      expect(page).to be_instance_of(Administrate::Page::Collection)
+    ensure
+      remove_constants :WidgetDashboard
     end
   end
 
   describe "class_name option" do
     it "determines what dashboard is used to present the association" do
-      begin
-        FooDashboard = Class.new
-        dashboard_double = double(collection_attributes: [])
-        allow(FooDashboard).to receive(:new).and_return(dashboard_double)
+      FooDashboard = Class.new
+      dashboard_double = double(collection_attributes: [])
+      allow(FooDashboard).to receive(:new).and_return(dashboard_double)
 
-        association = Administrate::Field::HasMany.
-          with_options(class_name: "Foo")
-        field = association.new(:customers, [], :show)
-        collection = field.associated_collection
-        attributes = collection.attribute_names
+      association = Administrate::Field::HasMany
+        .with_options(class_name: "Foo")
+      field = association.new(:customers, [], :show)
+      collection = field.associated_collection
+      attributes = collection.attribute_names
 
-        expect(dashboard_double).to have_received(:collection_attributes)
-        expect(attributes).to eq([])
-      ensure
-        remove_constants :FooDashboard
-      end
+      expect(dashboard_double).to have_received(:collection_attributes)
+      expect(attributes).to eq([])
+    ensure
+      remove_constants :FooDashboard
     end
   end
 
   describe "primary_key option" do
     it "determines what primary key is used on the relationship for the form" do
-      begin
-        Foo = Class.new
-        FooDashboard = Class.new
-        uuid = SecureRandom.uuid
-        allow(Foo).to receive(:all).and_return([Foo])
-        allow(Foo).to receive(:uuid).and_return(uuid)
-        allow(Foo).to receive(:id).and_return(1)
-        allow_any_instance_of(FooDashboard).to(
-          receive(:display_resource).and_return(uuid)
+      Foo = Class.new
+      FooDashboard = Class.new
+      uuid = SecureRandom.uuid
+      allow(Foo).to receive(:all).and_return([Foo])
+      allow(Foo).to receive(:uuid).and_return(uuid)
+      allow(Foo).to receive(:id).and_return(1)
+      allow_any_instance_of(FooDashboard).to(
+        receive(:display_resource).and_return(uuid)
+      )
+
+      association =
+        Administrate::Field::HasMany.with_options(
+          primary_key: "uuid", class_name: "Foo"
         )
+      field = association.new(:customers, [], :show)
+      field.associated_resource_options
 
-        association =
-          Administrate::Field::HasMany.with_options(
-            primary_key: "uuid", class_name: "Foo"
-          )
-        field = association.new(:customers, [], :show)
-        field.associated_resource_options
-
-        expect(Foo).to have_received(:all)
-        expect(Foo).to have_received(:uuid)
-        expect(Foo).not_to have_received(:id)
-      ensure
-        remove_constants :Foo, :FooDashboard
-      end
+      expect(Foo).to have_received(:all)
+      expect(Foo).to have_received(:uuid)
+      expect(Foo).not_to have_received(:id)
+    ensure
+      remove_constants :Foo, :FooDashboard
     end
   end
 
@@ -153,14 +147,14 @@ describe Administrate::Field::HasMany do
     context "with `sort_by` option" do
       it "returns the resources in correct order" do
         customer = FactoryBot.create(:customer, :with_orders)
-        options = { sort_by: :address_line_two }
+        options = {sort_by: :address_line_two}
         association = Administrate::Field::HasMany.with_options(options)
         field = association.new(:orders, customer.orders, :show)
 
         correct_order = customer.orders.sort_by(&:address_line_two).map(&:id)
-        reversed_order = customer.orders.sort do |a, b|
+        reversed_order = customer.orders.sort { |a, b|
           b.address_line_two <=> a.address_line_two
-        end
+        }
 
         expect(field.resources.map(&:id)).to eq correct_order
         expect(field.resources.map(&:id)).to_not eq reversed_order.map(&:id)
@@ -170,14 +164,14 @@ describe Administrate::Field::HasMany do
     context "with `direction` option" do
       it "returns the resources in correct order" do
         customer = FactoryBot.create(:customer, :with_orders)
-        options = { sort_by: :address_line_two, direction: :desc }
+        options = {sort_by: :address_line_two, direction: :desc}
         association = Administrate::Field::HasMany.with_options(options)
         field = association.new(:orders, customer.orders, :show)
 
         reversed_order = customer.orders.sort_by(&:address_line_two).map(&:id)
-        correct_order = customer.orders.sort do |a, b|
+        correct_order = customer.orders.sort { |a, b|
           b.address_line_two <=> a.address_line_two
-        end
+        }
 
         expect(field.resources.map(&:id)).to eq correct_order.map(&:id)
         expect(field.resources.map(&:id)).to_not eq reversed_order

@@ -8,7 +8,7 @@ module Administrate
       DEFAULT_LIMIT = 5
 
       def self.permitted_attribute(attr, _options = nil)
-        { "#{attr.to_s.singularize}_ids".to_sym => [] }
+        {"#{attr.to_s.singularize}_ids".to_sym => []}
       end
 
       def associated_collection(order = self.order)
@@ -55,7 +55,7 @@ module Administrate
       def order_from_params(params)
         Administrate::Order.new(
           params.fetch(:order, sort_by),
-          params.fetch(:direction, direction),
+          params.fetch(:direction, direction)
         )
       end
 

@@ -1,7 +1,7 @@
 class DocsController < ApplicationController
   REDCARPET_CONFIG = {
     fenced_code_blocks: true,
-    autolink: true,
+    autolink: true
   }.freeze
 
   def index

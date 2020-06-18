@@ -22,8 +22,8 @@ describe "documentation navigation" do
   it "links to the Github repo" do
     visit root_path
 
-    expect(github_link[:href]).
-      to eq "https://github.com/thoughtbot/administrate"
+    expect(github_link[:href])
+      .to eq "https://github.com/thoughtbot/administrate"
   end
 
   private
@@ -33,8 +33,8 @@ describe "documentation navigation" do
   end
 
   def internal_documentation_links
-    all(".sidebar a").
-      map { |anchor| anchor[:href] }.
-      select { |href| URI.parse(href).relative? }
+    all(".sidebar a")
+      .map { |anchor| anchor[:href] }
+      .select { |href| URI.parse(href).relative? }
   end
 end

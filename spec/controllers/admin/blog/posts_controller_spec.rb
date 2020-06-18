@@ -10,9 +10,9 @@ describe Admin::Blog::PostsController, type: :controller do
     end
 
     it "passes the search term to the view" do
-      locals = capture_view_locals do
+      locals = capture_view_locals {
         get :index, search: "foo"
-      end
+      }
 
       expect(locals[:search_term]).to eq("foo")
     end
@@ -28,9 +28,9 @@ describe Admin::Blog::PostsController, type: :controller do
     it "passes a page object to the view" do
       blog_post = create(:blog_post)
 
-      locals = capture_view_locals do
+      locals = capture_view_locals {
         get :show, id: blog_post.to_param
-      end
+      }
 
       page = locals[:page]
       expect(page).to be_instance_of(Administrate::Page::Show)
@@ -50,9 +50,9 @@ describe Admin::Blog::PostsController, type: :controller do
     it "passes the page object to the view" do
       blog_post = create(:blog_post)
 
-      locals = capture_view_locals do
+      locals = capture_view_locals {
         get :edit, id: blog_post.to_param
-      end
+      }
 
       page = locals[:page]
       expect(page).to be_instance_of(Administrate::Page::Form)
@@ -63,9 +63,9 @@ describe Admin::Blog::PostsController, type: :controller do
   describe "POST create" do
     context "with valid params" do
       it "creates a new blog post" do
-        expect do
+        expect {
           post :create, blog_post: attributes_for(:blog_post)
-        end.to change(Blog::Post, :count).by(1)
+        }.to change(Blog::Post, :count).by(1)
       end
 
       it "redirects to the created blog post" do
@@ -79,11 +79,11 @@ describe Admin::Blog::PostsController, type: :controller do
       render_views
 
       it "passes a form page object to the view" do
-        invalid_attributes = { title: "" }
+        invalid_attributes = {title: ""}
 
-        locals = capture_view_locals do
+        locals = capture_view_locals {
           post :create, blog_post: invalid_attributes
-        end
+        }
 
         page = locals[:page]
         expect(page).to be_instance_of(Administrate::Page::Form)
@@ -91,7 +91,7 @@ describe Admin::Blog::PostsController, type: :controller do
       end
 
       it "re-renders the 'new' template" do
-        invalid_attributes = { title: "" }
+        invalid_attributes = {title: ""}
 
         post :create, blog_post: invalid_attributes
 
@@ -104,7 +104,7 @@ describe Admin::Blog::PostsController, type: :controller do
     context "with valid params" do
       it "updates the requested blog post" do
         blog_post = create(:blog_post, title: "old title")
-        new_attributes = { title: "new title" }
+        new_attributes = {title: "new title"}
 
         put :update, id: blog_post.to_param, blog_post: new_attributes
 
@@ -128,7 +128,7 @@ describe Admin::Blog::PostsController, type: :controller do
 
       it "re-renders the 'edit' template" do
         blog_post = create(:blog_post)
-        invalid_attributes = { title: "" }
+        invalid_attributes = {title: ""}
 
         put :update, id: blog_post.to_param, blog_post: invalid_attributes
 
@@ -137,11 +137,11 @@ describe Admin::Blog::PostsController, type: :controller do
 
       it "passes a form page object to the view" do
         blog_post = create(:blog_post)
-        invalid_attributes = { title: "" }
+        invalid_attributes = {title: ""}
 
-        locals = capture_view_locals do
+        locals = capture_view_locals {
           put :update, id: blog_post.to_param, blog_post: invalid_attributes
-        end
+        }
 
         page = locals[:page]
         expect(page).to be_instance_of(Administrate::Page::Form)
@@ -154,9 +154,9 @@ describe Admin::Blog::PostsController, type: :controller do
     it "destroys the requested blog post" do
       blog_post = create(:blog_post)
 
-      expect do
+      expect {
         delete :destroy, id: blog_post.to_param
-      end.to change(Blog::Post, :count).by(-1)
+      }.to change(Blog::Post, :count).by(-1)
     end
 
     it "redirects to the blog posts list" do

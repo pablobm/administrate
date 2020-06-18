@@ -79,10 +79,10 @@ describe "order form" do
         helpers: {
           label: {
             order: {
-              line_items: custom_label,
-            },
-          },
-        },
+              line_items: custom_label
+            }
+          }
+        }
       }
 
       with_translations(:en, translations) do
@@ -103,14 +103,14 @@ describe "order form" do
       order = create(:order)
 
       visit edit_admin_order_path(order)
-      select_from_datepicker(Time.new(2015, 01, 02, 03, 04, 05))
+      select_from_datepicker(Time.new(2015, 0o1, 0o2, 0o3, 0o4, 0o5))
       click_on "Update Order"
 
       expect(page).to have_content("Fri, Jan 2, 2015 at 03:04:05 AM")
     end
 
     it "populates and persists the existing value", :js do
-      time = Time.new(2015, 01, 02, 03, 04, 05)
+      time = Time.new(2015, 0o1, 0o2, 0o3, 0o4, 0o5)
       order = create(:order, shipped_at: time)
 
       visit edit_admin_order_path(order)

@@ -12,14 +12,14 @@ module Administrate
         integer: "Field::Number",
         time: "Field::Time",
         text: "Field::Text",
-        string: "Field::String",
+        string: "Field::String"
       }
 
       ATTRIBUTE_OPTIONS_MAPPING = {
         # procs must be defined in one line!
-        enum: {  searchable: false,
-                 collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys } },
-        float: { decimals: 2 },
+        enum: {searchable: false,
+               collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }},
+        float: {decimals: 2}
       }
 
       DEFAULT_FIELD_TYPE = "Field::String.with_options(searchable: false)"
@@ -33,13 +33,13 @@ module Administrate
       def create_dashboard_definition
         template(
           "dashboard.rb.erb",
-          Rails.root.join("app/dashboards/#{file_name}_dashboard.rb"),
+          Rails.root.join("app/dashboards/#{file_name}_dashboard.rb")
         )
       end
 
       def create_resource_controller
         destination = Rails.root.join(
-          "app/controllers/#{namespace}/#{file_name.pluralize}_controller.rb",
+          "app/controllers/#{namespace}/#{file_name.pluralize}_controller.rb"
         )
 
         template("controller.rb.erb", destination)
@@ -62,9 +62,9 @@ module Administrate
       end
 
       def redundant_attributes
-        klass.reflections.keys.flat_map do |relationship|
+        klass.reflections.keys.flat_map { |relationship|
           redundant_attributes_for(relationship)
-        end.compact
+        }.compact
       end
 
       def redundant_attributes_for(relationship)
@@ -138,10 +138,10 @@ module Administrate
       end
 
       def inspect_hash_as_ruby(hash)
-        hash.map do |key, value|
+        hash.map { |key, value|
           v_str = value.respond_to?(:call) ? proc_string(value) : value.inspect
           "#{key}: #{v_str}"
-        end.join(", ")
+        }.join(", ")
       end
 
       def proc_string(value)

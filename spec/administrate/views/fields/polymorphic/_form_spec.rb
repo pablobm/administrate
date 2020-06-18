@@ -1,13 +1,12 @@
 require "rails_helper"
 
 describe "fields/polymorphic/_form", type: :view do
-
   it "displays the association name" do
     polymorphic = double(name: "parent").as_null_object
 
     render(
       partial: "fields/polymorphic/form.html.erb",
-      locals: { field: polymorphic, f: fake_form_builder },
+      locals: {field: polymorphic, f: fake_form_builder}
     )
 
     expect(rendered).to include("Parent")

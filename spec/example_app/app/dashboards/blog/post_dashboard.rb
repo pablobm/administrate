@@ -8,19 +8,19 @@ module Blog
       updated_at: Field::DateTime,
       title: Field::String,
       published_at: Field::DateTime,
-      body: Field::Text,
+      body: Field::Text
     }
 
     READ_ONLY_ATTRIBUTES = [
       :id,
       :created_at,
-      :updated_at,
+      :updated_at
     ]
 
     COLLECTION_ATTRIBUTES = [
       :id,
       :title,
-      :published_at,
+      :published_at
     ]
 
     FORM_ATTRIBUTES = ATTRIBUTE_TYPES.keys - READ_ONLY_ATTRIBUTES

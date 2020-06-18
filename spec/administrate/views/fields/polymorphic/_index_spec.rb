@@ -7,7 +7,7 @@ describe "fields/polymorphic/_index", type: :view do
 
       render(
         partial: "fields/polymorphic/index.html.erb",
-        locals: { field: polymorphic },
+        locals: {field: polymorphic}
       )
 
       expect(rendered.strip).to eq("")
@@ -21,12 +21,12 @@ describe "fields/polymorphic/_index", type: :view do
       polymorphic = instance_double(
         "Administrate::Field::Polymorphic",
         data: product,
-        display_associated_resource: product.name,
+        display_associated_resource: product.name
       )
 
       render(
         partial: "fields/polymorphic/index.html.erb",
-        locals: { field: polymorphic, namespace: "admin" },
+        locals: {field: polymorphic, namespace: "admin"}
       )
 
       expected = "<a href=\"#{product_path}\">#{product.name}</a>"

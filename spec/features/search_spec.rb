@@ -77,7 +77,7 @@ feature "Search" do
   scenario "admin clears search" do
     query = "foo"
     mismatch = create(:customer, name: "someone")
-    visit admin_customers_path(search: query, customer: { order: :name })
+    visit admin_customers_path(search: query, customer: {order: :name})
 
     expect(page).not_to have_content(mismatch.email)
     clear_search

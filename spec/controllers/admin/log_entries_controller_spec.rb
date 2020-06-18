@@ -7,8 +7,8 @@ describe Admin::LogEntriesController, type: :controller do
         action: action,
         logeable: {
           type: "Administrate::Field::Polymorphic",
-          value: logeable.to_global_id.to_s,
-        },
+          value: logeable.to_global_id.to_s
+        }
       )
       post :create, log_entry: resource_params
     end
@@ -16,9 +16,9 @@ describe Admin::LogEntriesController, type: :controller do
     describe "with valid params" do
       it "creates a new LogEntry" do
         customer = create(:customer)
-        expect do
+        expect {
           post_create(logeable: customer)
-        end.to change(LogEntry, :count).by(1)
+        }.to change(LogEntry, :count).by(1)
         expect(LogEntry.last.logeable).to eq(customer)
       end
 
@@ -36,15 +36,15 @@ describe Admin::LogEntriesController, type: :controller do
               params: {
                 logeable: {
                   type: "Administrate::Field::Polymorphic",
-                  value: customer.to_global_id.to_s,
-                },
-              },
-            },
-          },
+                  value: customer.to_global_id.to_s
+                }
+              }
+            }
+          }
         )
 
         allow_any_instance_of(
-          LogEntryDashboard,
+          LogEntryDashboard
         ).to receive(:permitted_attributes).and_return(
           [
             arbitrarily: {
@@ -52,12 +52,12 @@ describe Admin::LogEntriesController, type: :controller do
                 params: {
                   logeable: [
                     :type,
-                    :value,
-                  ],
-                },
-              },
-            },
-          ],
+                    :value
+                  ]
+                }
+              }
+            }
+          ]
         )
 
         LogEntry.attr_accessor :arbitrarily
@@ -68,7 +68,7 @@ describe Admin::LogEntriesController, type: :controller do
           :arbitrarily,
           :nested,
           :params,
-          :logeable,
+          :logeable
         )
         expect(logeable_in_params).to eq(customer)
       end
@@ -78,9 +78,9 @@ describe Admin::LogEntriesController, type: :controller do
       it "passes a form page object to the view" do
         customer = create(:customer)
 
-        locals = capture_view_locals do
+        locals = capture_view_locals {
           post_create(action: "cancel", logeable: customer)
-        end
+        }
 
         page = locals[:page]
         expect(page).to be_instance_of(Administrate::Page::Form)
@@ -95,8 +95,8 @@ describe Admin::LogEntriesController, type: :controller do
         action: action,
         logeable: {
           type: "Administrate::Field::Polymorphic",
-          value: logeable.to_global_id.to_s,
-        },
+          value: logeable.to_global_id.to_s
+        }
       )
       put :update, id: original.to_param, log_entry: resource_params
     end
@@ -127,9 +127,9 @@ describe Admin::LogEntriesController, type: :controller do
         log_entry = create(:log_entry, logeable: customer)
         new_action = "cancel"
 
-        locals = capture_view_locals do
+        locals = capture_view_locals {
           put_update(log_entry, action: new_action, logeable: customer)
-        end
+        }
 
         page = locals[:page]
         expect(page).to be_instance_of(Administrate::Page::Form)

@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
-  def self.policy_class=(policy)
-    @policy_class = policy
+  class << self
+    attr_writer :policy_class
   end
 
   def self.policy_class
@@ -15,10 +15,10 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :price, presence: true
   validates :release_year,
-            numericality: {
-              less_than_or_equal_to: ->(_product) { Time.current.year },
-            },
-            allow_blank: true
+    numericality: {
+      less_than_or_equal_to: ->(_product) { Time.current.year }
+    },
+    allow_blank: true
   validates :slug, uniqueness: true
   validate :valid_slug
 

@@ -44,15 +44,15 @@ module HTTPMethodShim
   end
 end
 
-if Gem::Dependency.new("rails", "~> 5.1.0").
-    match?("rails", Rails::VERSION::STRING)
+if Gem::Dependency.new("rails", "~> 5.1.0")
+    .match?("rails", Rails::VERSION::STRING)
   RSpec.configure do |config|
     config.include HTTPMethodShim::Rails51, type: :controller
   end
 end
 
-if Gem::Dependency.new("rails", "~> 5.0.0").
-    match?("rails", Rails::VERSION::STRING)
+if Gem::Dependency.new("rails", "~> 5.0.0")
+    .match?("rails", Rails::VERSION::STRING)
   RSpec.configure do |config|
     config.include HTTPMethodShim::Rails50, type: :controller
   end

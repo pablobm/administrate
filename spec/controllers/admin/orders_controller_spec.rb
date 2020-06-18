@@ -44,16 +44,16 @@ describe Admin::OrdersController, type: :controller do
 
       it "does not allow me to edit other records" do
         ga = create :order, customer: user, address_state: "GA"
-        expect { get :edit, id: ga.id }.
-          to raise_error(Pundit::NotAuthorizedError)
+        expect { get :edit, id: ga.id }
+          .to raise_error(Pundit::NotAuthorizedError)
       end
     end
 
     describe "DELETE destroy" do
       it "never allows me to delete a record" do
         o = create :order, customer: user, address_state: "AZ"
-        expect { delete :destroy, id: o.id }.
-          to raise_error(Pundit::NotAuthorizedError)
+        expect { delete :destroy, id: o.id }
+          .to raise_error(Pundit::NotAuthorizedError)
       end
     end
 

@@ -16,10 +16,10 @@ describe "edit form" do
       helpers: {
         label: {
           customer: {
-            email_subscriber: custom_label,
-          },
-        },
-      },
+            email_subscriber: custom_label
+          }
+        }
+      }
     }
 
     with_translations(:en, translations) do

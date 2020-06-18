@@ -19,7 +19,7 @@ module Administrate
         "controllers",
         "concerns",
         "administrate",
-        "punditize.rb",
+        "punditize.rb"
       )
 
       yield

@@ -18,9 +18,9 @@ describe Admin::CustomersController, type: :controller do
     end
 
     it "passes the search term to the view" do
-      locals = capture_view_locals do
+      locals = capture_view_locals {
         get :index, search: "foo"
-      end
+      }
 
       expect(locals[:search_term]).to eq("foo")
     end
@@ -72,9 +72,9 @@ describe Admin::CustomersController, type: :controller do
     it "passes a page object to the view" do
       customer = create(:customer)
 
-      locals = capture_view_locals do
+      locals = capture_view_locals {
         get :show, id: customer.to_param
-      end
+      }
 
       page = locals[:page]
       expect(page).to be_instance_of(Administrate::Page::Show)
@@ -94,9 +94,9 @@ describe Admin::CustomersController, type: :controller do
     it "passes the page object to the view" do
       customer = create(:customer)
 
-      locals = capture_view_locals do
+      locals = capture_view_locals {
         get :edit, id: customer.to_param
-      end
+      }
 
       page = locals[:page]
       expect(page).to be_instance_of(Administrate::Page::Form)
@@ -121,11 +121,11 @@ describe Admin::CustomersController, type: :controller do
 
     describe "with invalid params" do
       it "passes a form page object to the view" do
-        invalid_attributes = { name: "" }
+        invalid_attributes = {name: ""}
 
-        locals = capture_view_locals do
+        locals = capture_view_locals {
           post :create, customer: invalid_attributes
-        end
+        }
 
         page = locals[:page]
         expect(page).to be_instance_of(Administrate::Page::Form)
@@ -139,7 +139,7 @@ describe Admin::CustomersController, type: :controller do
       it "updates the requested customer" do
         customer = create(:customer)
         new_name = "new name"
-        new_attributes = { name: new_name }
+        new_attributes = {name: new_name}
 
         put :update, id: customer.to_param, customer: new_attributes
 
@@ -160,11 +160,11 @@ describe Admin::CustomersController, type: :controller do
     describe "with invalid params" do
       it "passes a form page object to the view" do
         customer = create(:customer)
-        invalid_attributes = { name: "" }
+        invalid_attributes = {name: ""}
 
-        locals = capture_view_locals do
+        locals = capture_view_locals {
           put :update, id: customer.to_param, customer: invalid_attributes
-        end
+        }
 
         page = locals[:page]
         expect(page).to be_instance_of(Administrate::Page::Form)
@@ -177,9 +177,9 @@ describe Admin::CustomersController, type: :controller do
     it "destroys the requested customer" do
       customer = create(:customer)
 
-      expect do
+      expect {
         delete :destroy, id: customer.to_param
-      end.to change(Customer, :count).by(-1)
+      }.to change(Customer, :count).by(-1)
     end
 
     it "redirects to the customers list" do

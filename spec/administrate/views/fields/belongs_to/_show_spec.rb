@@ -10,7 +10,7 @@ describe "fields/belongs_to/_show", type: :view do
       "Administrate::Field::BelongsTo",
       associated_class: associated_class,
       display_associated_resource: product.name,
-      data: product,
+      data: product
     )
   end
 
@@ -33,7 +33,7 @@ describe "fields/belongs_to/_show", type: :view do
   def render_belongs_to_show
     render(
       partial: "fields/belongs_to/show.html.erb",
-      locals: { field: belongs_to, namespace: "admin" },
+      locals: {field: belongs_to, namespace: "admin"}
     )
   end
 end

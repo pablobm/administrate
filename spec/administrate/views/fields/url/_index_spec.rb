@@ -6,17 +6,17 @@ describe "fields/url/_index", type: :view do
     url = instance_double(
       "Administrate::Field::Url",
       data: product.image_url,
-      attribute: :image_url,
+      attribute: :image_url
     )
 
     render(
       partial: "fields/url/index.html.erb",
-      locals: { field: url, namespace: "admin" },
+      locals: {field: url, namespace: "admin"}
     )
 
     expect(rendered).to have_css(
-      %{a[href="#{product.image_url}"]},
-      text: product.image_url,
+      %(a[href="#{product.image_url}"]),
+      text: product.image_url
     )
   end
 end

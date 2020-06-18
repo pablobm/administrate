@@ -56,7 +56,7 @@ describe "customer edit page" do
 
     expect(page).to have_css(
       "#error_explanation ul li.flash-error",
-      text: "Name can't be blank",
+      text: "Name can't be blank"
     )
   end
 

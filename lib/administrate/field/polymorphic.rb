@@ -4,7 +4,7 @@ module Administrate
   module Field
     class Polymorphic < BelongsTo
       def self.permitted_attribute(attr, _options = nil)
-        { attr => %i{type value} }
+        {attr => %i[type value]}
       end
 
       def associated_resource_grouped_options
@@ -16,7 +16,7 @@ module Administrate
       end
 
       def permitted_attribute
-        { attribute => %i{type value} }
+        {attribute => %i[type value]}
       end
 
       def selected_global_id

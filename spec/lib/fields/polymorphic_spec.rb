@@ -17,25 +17,23 @@ describe Administrate::Field::Polymorphic do
     end
   end
 
-  it { should_permit_param({ foo: %i{type value} }, for_attribute: :foo) }
+  it { should_permit_param({foo: %i[type value]}, for_attribute: :foo) }
 
   describe "#display_associated_resource" do
     it "displays through the dashboard based on the polymorphic class name" do
-      begin
-        Thing = Class.new
-        ThingDashboard = Class.new do
-          def display_resource(*)
-            :success
-          end
+      Thing = Class.new
+      ThingDashboard = Class.new {
+        def display_resource(*)
+          :success
         end
+      }
 
-        field = Administrate::Field::Polymorphic.new(:foo, Thing.new, :show)
-        display = field.display_associated_resource
+      field = Administrate::Field::Polymorphic.new(:foo, Thing.new, :show)
+      display = field.display_associated_resource
 
-        expect(display).to eq :success
-      ensure
-        remove_constants :Thing, :ThingDashboard
-      end
+      expect(display).to eq :success
+    ensure
+      remove_constants :Thing, :ThingDashboard
     end
   end
 

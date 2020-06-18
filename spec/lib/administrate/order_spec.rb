@@ -86,7 +86,7 @@ describe Administrate::Order do
         order = Administrate::Order.new(:name)
         relation = relation_with_association(
           :belongs_to,
-          foreign_key: "some_foreign_key",
+          foreign_key: "some_foreign_key"
         )
         allow(relation).to receive(:reorder).and_return(relation)
 
@@ -185,8 +185,8 @@ describe Administrate::Order do
   def relation_with_column(column)
     double(
       klass: double(reflect_on_association: nil),
-      columns_hash: { column.to_s => :column_info },
-      table_name: "table_name",
+      columns_hash: {column.to_s => :column_info},
+      table_name: "table_name"
     )
   end
 
@@ -196,9 +196,9 @@ describe Administrate::Order do
         reflect_on_association: double(
           "#{association}_reflection",
           macro: association,
-          foreign_key: foreign_key,
-        ),
-      ),
+          foreign_key: foreign_key
+        )
+      )
     )
   end
 end

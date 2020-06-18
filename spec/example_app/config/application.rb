@@ -32,7 +32,7 @@ module AdministratePrototype
     end
 
     if Rails::VERSION::MAJOR >= 5
-      config.active_record.time_zone_aware_types = %i(datetime time)
+      config.active_record.time_zone_aware_types = %i[datetime time]
     end
   end
 end

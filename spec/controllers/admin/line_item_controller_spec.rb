@@ -10,4 +10,3 @@ describe Admin::LineItemsController, type: :controller do
     end
   end
 end
-

@@ -56,10 +56,10 @@ describe "customer index page" do
       helpers: {
         label: {
           customer: {
-            email_subscriber: custom_label,
-          },
-        },
-      },
+            email_subscriber: custom_label
+          }
+        }
+      }
     }
 
     with_translations(:en, translations) do
@@ -142,8 +142,8 @@ describe "search input" do
 
     context "but none of them are displayed" do
       before do
-        allow_any_instance_of(LogEntryDashboard).
-          to receive(:collection_attributes) { [] }
+        allow_any_instance_of(LogEntryDashboard)
+          .to receive(:collection_attributes) { [] }
         visit(index_with_searchable_fields)
       end
 

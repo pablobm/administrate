@@ -79,13 +79,13 @@ module Administrate
     end
 
     def query_template
-      search_attributes.map do |attr|
+      search_attributes.map { |attr|
         table_name = query_table_name(attr)
-        searchable_fields(attr).map do |field|
+        searchable_fields(attr).map { |field|
           attr_name = column_to_query(field)
           "LOWER(CAST(#{table_name}.#{attr_name} AS CHAR(256))) LIKE ?"
-        end.join(" OR ")
-      end.join(" OR ")
+        }.join(" OR ")
+      }.join(" OR ")
     end
 
     def searchable_fields(attr)
@@ -95,9 +95,9 @@ module Administrate
     end
 
     def query_values
-      fields_count = search_attributes.sum do |attr|
+      fields_count = search_attributes.sum { |attr|
         searchable_fields(attr).count
-      end
+      }
       ["%#{term.mb_chars.downcase}%"] * fields_count
     end
 
@@ -108,9 +108,9 @@ module Administrate
     end
 
     def search_results(resources)
-      resources.
-        joins(tables_to_join).
-        where(query_template, *query_values)
+      resources
+        .joins(tables_to_join)
+        .where(query_template, *query_values)
     end
 
     def valid_filters
@@ -134,8 +134,8 @@ module Administrate
           ActiveRecord::Base.connection.quote_table_name(attr.to_s.pluralize)
         end
       else
-        ActiveRecord::Base.connection.
-          quote_table_name(@scoped_resource.table_name)
+        ActiveRecord::Base.connection
+          .quote_table_name(@scoped_resource.table_name)
       end
     end
 

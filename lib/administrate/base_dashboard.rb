@@ -55,9 +55,9 @@ module Administrate
     end
 
     def permitted_attributes
-      form_attributes.map do |attr|
+      form_attributes.map { |attr|
         attribute_types[attr].permitted_attribute(attr)
-      end.uniq
+      }.uniq
     end
 
     def show_page_attributes
@@ -87,11 +87,11 @@ module Administrate
     end
 
     def attribute_includes(attributes)
-      attributes.map do |key|
+      attributes.map { |key|
         field = self.class::ATTRIBUTE_TYPES[key]
 
         key if field.associative?
-      end.compact
+      }.compact
     end
   end
 end

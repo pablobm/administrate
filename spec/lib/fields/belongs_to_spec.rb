@@ -22,57 +22,53 @@ describe Administrate::Field::BelongsTo do
 
   describe "class_name option" do
     it "determines what dashboard is used to present the association" do
-      begin
-        Foo = Class.new
-        allow(Foo).to receive(:all).and_return([])
+      Foo = Class.new
+      allow(Foo).to receive(:all).and_return([])
 
-        association = Administrate::Field::BelongsTo.with_options(
-          class_name: "Foo",
-        )
-        field = association.new(:customers, [], :show)
-        candidates = field.associated_resource_options
+      association = Administrate::Field::BelongsTo.with_options(
+        class_name: "Foo"
+      )
+      field = association.new(:customers, [], :show)
+      candidates = field.associated_resource_options
 
-        expect(Foo).to have_received(:all)
-        expect(candidates).to eq([nil])
-      ensure
-        remove_constants :Foo
-      end
+      expect(Foo).to have_received(:all)
+      expect(candidates).to eq([nil])
+    ensure
+      remove_constants :Foo
     end
   end
 
   describe "primary_key option" do
     it "determines what primary key is used on the relationship for the form" do
-      begin
-        Foo = Class.new
-        FooDashboard = Class.new
-        uuid = SecureRandom.uuid
-        allow(Foo).to receive(:all).and_return([Foo])
-        allow(Foo).to receive(:uuid).and_return(uuid)
-        allow(Foo).to receive(:id).and_return(1)
-        allow_any_instance_of(FooDashboard).to(
-          receive(:display_resource).and_return(uuid)
+      Foo = Class.new
+      FooDashboard = Class.new
+      uuid = SecureRandom.uuid
+      allow(Foo).to receive(:all).and_return([Foo])
+      allow(Foo).to receive(:uuid).and_return(uuid)
+      allow(Foo).to receive(:id).and_return(1)
+      allow_any_instance_of(FooDashboard).to(
+        receive(:display_resource).and_return(uuid)
+      )
+
+      association =
+        Administrate::Field::BelongsTo.with_options(
+          primary_key: "uuid", class_name: "Foo"
         )
+      field = association.new(:customers, [], :show)
+      field.associated_resource_options
 
-        association =
-          Administrate::Field::BelongsTo.with_options(
-            primary_key: "uuid", class_name: "Foo"
-          )
-        field = association.new(:customers, [], :show)
-        field.associated_resource_options
-
-        expect(Foo).to have_received(:all)
-        expect(Foo).to have_received(:uuid)
-        expect(Foo).not_to have_received(:id)
-      ensure
-        remove_constants :Foo, :FooDashboard
-      end
+      expect(Foo).to have_received(:all)
+      expect(Foo).to have_received(:uuid)
+      expect(Foo).not_to have_received(:id)
+    ensure
+      remove_constants :Foo, :FooDashboard
     end
   end
 
   describe "foreign_key option" do
     it "determines what foreign key is used on the relationship for the form" do
       association = Administrate::Field::BelongsTo.with_options(
-        foreign_key: "foo_uuid", class_name: "Foo",
+        foreign_key: "foo_uuid", class_name: "Foo"
       )
       field = association.new(:customers, [], :show)
       permitted_attribute = field.permitted_attribute
@@ -84,7 +80,7 @@ describe Administrate::Field::BelongsTo do
     context "with `order` option" do
       it "returns the resources in correct order" do
         FactoryBot.create_list(:customer, 5)
-        options = { order: "name" }
+        options = {order: "name"}
         association = Administrate::Field::BelongsTo.with_options(options)
         field = association.new(:customers, [], :view)
 
@@ -98,7 +94,7 @@ describe Administrate::Field::BelongsTo do
         FactoryBot.create_list(:customer, 3)
         options = {
           order: "name",
-          scope: -> { Customer.order(name: :desc) },
+          scope: -> { Customer.order(name: :desc) }
         }
         association = Administrate::Field::BelongsTo.with_options(options)
         field = association.new(:customers, [], :view)

@@ -24,7 +24,7 @@ module Administrate
       delegate :ordered_by?, to: :order
 
       def order_params_for(attr, key: resource_name)
-        { key => order.order_params_for(attr) }
+        {key => order.order_params_for(attr)}
       end
 
       private

@@ -14,14 +14,14 @@ class OrderDashboard < Administrate::BaseDashboard
     line_items: Field::HasMany,
     total_price: Field::Number.with_options(prefix: "$", decimals: 2),
     shipped_at: Field::DateTime,
-    payments: Field::HasMany,
+    payments: Field::HasMany
   }
 
   READ_ONLY_ATTRIBUTES = [
     :id,
     :total_price,
     :created_at,
-    :updated_at,
+    :updated_at
   ]
 
   COLLECTION_ATTRIBUTES = [
@@ -30,7 +30,7 @@ class OrderDashboard < Administrate::BaseDashboard
     :address_state,
     :total_price,
     :line_items,
-    :shipped_at,
+    :shipped_at
   ]
 
   FORM_ATTRIBUTES = ATTRIBUTE_TYPES.keys - READ_ONLY_ATTRIBUTES

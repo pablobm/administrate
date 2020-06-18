@@ -8,7 +8,7 @@ module Administrate
     def self.template_source_path
       File.expand_path(
         "../../../app/views/administrate/application",
-        __FILE__,
+        __FILE__
       )
     end
 
@@ -19,7 +19,7 @@ module Administrate
 
       copy_file(
         template_file,
-        "app/views/admin/#{resource_path}/#{template_file}",
+        "app/views/admin/#{resource_path}/#{template_file}"
       )
     end
 

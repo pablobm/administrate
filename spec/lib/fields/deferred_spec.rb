@@ -6,22 +6,22 @@ describe Administrate::Field::Deferred do
   describe "#permitted_attribute" do
     context "when given a `foreign_key` option" do
       it "returns the value given" do
-        deferred = Administrate::Field::Deferred.
-          new(Administrate::Field::BelongsTo.with_options(foreign_key: :bar))
+        deferred = Administrate::Field::Deferred
+          .new(Administrate::Field::BelongsTo.with_options(foreign_key: :bar))
         expect(deferred.permitted_attribute(:foo)).to eq(:bar)
       end
     end
 
     context "when not given a `foreign_key` option" do
       it "delegates to the backing class" do
-        deferred = Administrate::Field::Deferred.
-          new(Administrate::Field::String)
+        deferred = Administrate::Field::Deferred
+          .new(Administrate::Field::String)
         allow(Administrate::Field::String).to receive(:permitted_attribute)
 
         deferred.permitted_attribute(:foo)
 
-        expect(Administrate::Field::String).
-          to have_received(:permitted_attribute).with(:foo, {})
+        expect(Administrate::Field::String)
+          .to have_received(:permitted_attribute).with(:foo, {})
       end
     end
   end
@@ -29,10 +29,10 @@ describe Administrate::Field::Deferred do
   describe "#searchable?" do
     context "when given a `searchable` option" do
       it "returns the value given" do
-        searchable_deferred = Administrate::Field::Deferred.
-          new(double(searchable?: false), searchable: true)
-        unsearchable_deferred = Administrate::Field::Deferred.
-          new(double(searchable?: true), searchable: false)
+        searchable_deferred = Administrate::Field::Deferred
+          .new(double(searchable?: false), searchable: true)
+        unsearchable_deferred = Administrate::Field::Deferred
+          .new(double(searchable?: true), searchable: false)
 
         expect(searchable_deferred.searchable?).to eq(true)
         expect(unsearchable_deferred.searchable?).to eq(false)
@@ -41,10 +41,10 @@ describe Administrate::Field::Deferred do
 
     context "when not given a `searchable` option" do
       it "falls back to the default of the deferred class" do
-        searchable_deferred = Administrate::Field::Deferred.
-          new(double(searchable?: true))
-        unsearchable_deferred = Administrate::Field::Deferred.
-          new(double(searchable?: false))
+        searchable_deferred = Administrate::Field::Deferred
+          .new(double(searchable?: true))
+        unsearchable_deferred = Administrate::Field::Deferred
+          .new(double(searchable?: false))
 
         expect(searchable_deferred.searchable?).to eq(true)
         expect(unsearchable_deferred.searchable?).to eq(false)
