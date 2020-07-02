@@ -17,8 +17,16 @@ module Administrate
         "#{associated_class_name}Dashboard".constantize.new
       end
 
+      #def associated_class(resource_class, attr)
+        #reflection(resource_class, attr).klass
+      #end
+
       def associated_class_name
-        options.fetch(:class_name, attribute.to_s.singularize.camelcase)
+        reflection.class_name
+      end
+
+      def reflection
+        resource.class.reflect_on_association(attribute)
       end
 
       def primary_key

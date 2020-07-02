@@ -28,11 +28,9 @@ module Administrate
         attr
       end
 
-      def initialize(attribute, data, page, options = {})
+      def initialize(resource, attribute, options = {})
+        @resource = resource
         @attribute = attribute
-        @data = data
-        @page = page
-        @resource = options.delete(:resource)
         @options = options
       end
 
@@ -44,11 +42,15 @@ module Administrate
         attribute.to_s
       end
 
-      def to_partial_path
-        "/fields/#{self.class.field_type}/#{page}"
+      def data
+        resource.public_send(attribute)
       end
 
-      attr_reader :attribute, :data, :options, :page, :resource
+      def to_partial_path(action_name)
+        "/fields/#{self.class.field_type}/#{action_name}"
+      end
+
+      attr_reader :resource, :attribute, :options
     end
   end
 end

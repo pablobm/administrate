@@ -7,10 +7,15 @@ module Administrate
         dashboard.collection_attributes
       end
 
-      def attributes_for(resource)
+      def fields_for(resource)
         attribute_names.map do |attr_name|
-          attribute_field(dashboard, resource, attr_name, :index)
+          attribute_field(resource, dashboard, attr_name)
         end
+      end
+
+      # TODO: deprecate
+      def attributes_for(resource)
+        fields_for(resource)
       end
 
       def attribute_types
