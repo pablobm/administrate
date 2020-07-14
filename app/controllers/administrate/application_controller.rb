@@ -105,10 +105,7 @@ module Administrate
     end
 
     def sorting_attribute
-      params.fetch(resource_name, {}).fetch(
-        :order,
-        default_sorting_attribute,
-      )
+      sorting_space && sorting_space[:order] || default_sorting_attribute
     end
 
     def default_sorting_attribute
@@ -116,14 +113,15 @@ module Administrate
     end
 
     def sorting_direction
-      params.fetch(resource_name, {}).fetch(
-        :direction,
-        default_sorting_direction,
-      )
+      sorting_space && sorting_space[:direction] || default_sorting_direction
     end
 
     def default_sorting_direction
       nil
+    end
+
+    def sorting_space
+      Hash.try_convert(request.query_parameters[resource_name])
     end
 
     def dashboard
