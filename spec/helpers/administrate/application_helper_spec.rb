@@ -111,8 +111,9 @@ RSpec.describe Administrate::ApplicationHelper do
 
         result = ctx.administrate_valid_action?("test_custom_resource", "foo")
 
-        expect(ctx).to have_received(:valid_action?).with("foo", TestCustomResource)
-        expect(ctx).to have_received(:show_action?).with("foo", TestCustomResource)
+        # Using a symbol instead of a class is allowed for both methods
+        expect(ctx).to have_received(:valid_action?).with("foo", :test_custom_resource)
+        expect(ctx).to have_received(:show_action?).with("foo", :test_custom_resource)
       ensure
         remove_constants :TestCustomResource
       end
