@@ -37,9 +37,10 @@ module Administrate
     #   - ActiveRecord::Base: resource instance
     def administrate_valid_action?(target, action_name)
       target = target.to_sym if target.is_a?(String)
-      target_class = target.is_a?(ActiveRecord::Base) ? target.class : target
+      target_class_or_class_name =
+        target.is_a?(ActiveRecord::Base) ? target.class : target
 
-      valid_action?(action_name, target_class) &&
+      valid_action?(action_name, target_class_or_class_name) &&
         show_action?(action_name, target)
     end
 
