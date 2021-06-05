@@ -64,7 +64,7 @@ RSpec.describe Administrate::ApplicationHelper do
     end
 
     context "using custom dashboards" do
-      it "pluralizes the resource name" do
+      it "returns the name defined in the dashboard" do
         displayed = display_resource_name("stat")
 
         expect(displayed).to eq("Stats")
