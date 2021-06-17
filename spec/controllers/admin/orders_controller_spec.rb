@@ -36,13 +36,13 @@ describe Admin::OrdersController, type: :controller do
     describe "GET edit" do
       it "allows me to edit my records" do
         order = create :order, customer: user
-        expect { get :edit, params: { id: order.id } }.not_to raise_error
+        expect { get :edit, id: order.id }.not_to raise_error
       end
 
       it "does not allow me to see other users' records" do
         other_user = create(:customer)
         order = create(:order, customer: other_user)
-        expect { get :show, params: { id: order.id } }.
+        expect { get :show, id: order.id }.
           to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -51,10 +51,8 @@ describe Admin::OrdersController, type: :controller do
       def send_request(order:)
         put(
           :update,
-          params: {
-            id: order.id,
-            order: { address_line_one: "22 Acacia Avenue" },
-          },
+          id: order.id,
+          order: { address_line_one: "22 Acacia Avenue" },
         )
       end
 
@@ -77,7 +75,7 @@ describe Admin::OrdersController, type: :controller do
     describe "DELETE destroy" do
       it "never allows me to delete a record" do
         o = create :order, customer: user, address_state: "AZ"
-        expect { delete :destroy, params: { id: o.id } }.
+        expect { delete :destroy, id: o.id }.
           to raise_error(Pundit::NotAuthorizedError)
       end
     end
