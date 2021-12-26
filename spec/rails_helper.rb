@@ -27,6 +27,10 @@ RSpec.configure do |config|
   config.before(:each, type: :generator) do
     allow(Rails).to receive(:root).and_return(Pathname.new(file(".")))
   end
+
+  config.after(:example, :js) do |something|
+    pp page.driver.browser.manage.logs.get(:browser)
+  end
 end
 
 ActiveRecord::Migration.maintain_test_schema!
