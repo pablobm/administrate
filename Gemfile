@@ -16,6 +16,7 @@ gem "unicorn"
 group :development, :test do
   gem "appraisal"
   gem "awesome_print"
+  gem "bullet"
   gem "bundler-audit", require: false
   gem "byebug"
   gem "dotenv-rails"
