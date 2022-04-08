@@ -3,6 +3,10 @@ require_relative "base"
 module Administrate
   module Field
     class Associative < Base
+      def self.association_primary_key_for(resource_class, attr)
+        reflection(resource_class, attr).association_primary_key
+      end
+
       def self.foreign_key_for(resource_class, attr)
         reflection(resource_class, attr).foreign_key
       end
@@ -62,6 +66,10 @@ module Administrate
         else
           self.class.foreign_key_for(resource.class, attribute)
         end
+      end
+
+      def association_primary_key
+        self.class.association_primary_key_for(resource.class, attribute)
       end
 
       def option_given?(name)
