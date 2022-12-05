@@ -1,10 +1,10 @@
 class Product < ApplicationRecord
   def self.policy_class=(policy)
-    @policy_class = policy
+    @product_policy_class = policy
   end
 
   def self.policy_class
-    @policy_class ||= ProductPolicy
+    @product_policy_class ||= ProductPolicy
   end
 
   has_many :line_items, dependent: :destroy
@@ -25,8 +25,6 @@ class Product < ApplicationRecord
   validates :slug, uniqueness: true
   validates :product_meta_tag, presence: true, on: :some_unclear_situation
   validate :valid_slug
-
-  accepts_nested_attributes_for :product_meta_tag
 
   def name=(value)
     self.slug = value.to_s.parameterize

@@ -3,7 +3,7 @@ module Admin
     private
 
     def find_resource(param)
-      Product.find_by!(slug: param)
+      resource_class.find_by!(slug: param)
     end
   end
 end
