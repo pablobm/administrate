@@ -43,3 +43,5 @@ group :staging, :production do
   gem "rack-timeout"
   gem "uglifier"
 end
+
+gem "paper_trail", "~> 14.0"
