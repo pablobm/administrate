@@ -1,4 +1,6 @@
 class Customer < ApplicationRecord
+  has_paper_trail
+
   has_many :orders, dependent: :destroy
   belongs_to(
     :territory,

@@ -7,6 +7,8 @@ class Product < ApplicationRecord
     @policy_class ||= ProductPolicy
   end
 
+  has_paper_trail
+
   has_many :line_items, dependent: :destroy
   has_many :pages, dependent: :destroy
   has_one :product_meta_tag, dependent: :destroy
