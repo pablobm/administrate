@@ -18,6 +18,7 @@ class CustomerDashboard < Administrate::BaseDashboard
       include_blank: true,
     ),
     password: Field::Password,
+    versions: Field::HasMany.with_options(class_name: 'PaperTrail::Version'),
   }
 
   COLLECTION_ATTRIBUTES = ATTRIBUTE_TYPES.keys - %i[created_at updated_at]

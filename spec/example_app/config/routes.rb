@@ -19,6 +19,10 @@ Rails.application.routes.draw do
       resources :tags
     end
 
+    namespace :paper_trail do
+      resources :versions
+    end
+
     resources :stats, only: [:index]
 
     root to: "customers#index"

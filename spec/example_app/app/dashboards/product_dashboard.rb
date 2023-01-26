@@ -9,6 +9,7 @@ class ProductDashboard < Administrate::BaseDashboard
     :image_url,
     :product_meta_tag,
     :release_year,
+    :versions
   ]
 
   ATTRIBUTE_TYPES = {
@@ -23,6 +24,7 @@ class ProductDashboard < Administrate::BaseDashboard
     release_year: Field::Select.with_options(
       collection: -> { (Time.current.year - 10)..Time.current.year },
     ),
+    versions: Field::HasMany.with_options(class_name: 'PaperTrail::Version'),
   }
 
   COLLECTION_ATTRIBUTES = ATTRIBUTES
