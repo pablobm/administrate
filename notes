@@ -1,0 +1,58 @@
+Command I'm using:
+
+```
+rm Gemfile.lock; bundle && be rspec --seed 60017 spec/generators/dashboard_generator_spec.rb:30 spec/generators/routes_generator_spec.rb:121
+```
+
+Different error:
+
+```
+An error occurred while loading ./spec/generators/dashboard_generator_spec.rb.
+Failure/Error: require "active_model/railtie"
+
+RuntimeError:
+  Rails::Engine is abstract, you cannot instantiate it directly.
+# /home/pablobm/Documents/contrib/rails/railties/lib/rails/railtie.rb:246:in `initialize'
+# /home/pablobm/Documents/contrib/rails/railties/lib/rails/railtie.rb:184:in `new'
+```
+
+Seen first at 131ac26ce2
+I'm going to label this `bisect bad` and see.
+If this doesn't help, I'll return here and try `bisect good`.
+
+The commit that causes the Rails::Engine error:
+
+```
+cb82f5f0a438c7be64ca1c0633556f6a535138b6 is the first bad commit
+commit cb82f5f0a438c7be64ca1c0633556f6a535138b6
+Author: Jean Boussier <jean.boussier@gmail.com>
+Date:   Thu Nov 25 12:55:53 2021 +0100
+
+    Fix DescendantTracker.clear on Ruby 3.1
+
+    Previously I assumed it was useless, however I was wrong.
+
+    The method is called by the reloader to give the illusion that
+    the GC is precise. Meaning a class that will be unloaded is
+    immediately made invisible without waiting for it to be garbage collected.
+
+    This is easy to do up to Ruby 3.0 because `DescendantTracker` keeps
+    a map of all tracked classes.
+
+    However on 3.1 we need to use the inverse strategy, we keep a WeakMap
+    of all the classes we cleared, and we filter the return value of `descendants`
+    and `subclasses`.
+
+    Since `clear` is private API and is only used when reloading is enabled,
+    to reduce the performance impact in production mode, we entirely remove
+    this behavior when `config.cache_classes` is enabled.
+
+ .../active_support/core_ext/class/subclasses.rb    |  2 +-
+ .../lib/active_support/descendants_tracker.rb      | 78 ++++++++++++++++++----
+ activesupport/lib/active_support/ruby_features.rb  |  1 -
+ activesupport/test/descendants_tracker_test.rb     | 14 +---
+ railties/lib/rails/application/finisher.rb         |  5 +-
+ 5 files changed, 69 insertions(+), 31 deletions(-)
+```
+
+It does looks like it would be related to our problem too.
