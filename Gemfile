@@ -2,6 +2,25 @@ source 'https://rubygems.org'
 
 gemspec
 
+RAILS_PATH = ENV["RAILS_PATH"]
+
+%w{
+  actioncable
+  actionmailbox
+  actionmailer
+  actionpack
+  actiontext
+  actionview
+  activejob
+  activemodel
+  activerecord
+  activestorage
+  activesupport
+  railties
+}.each do |name|
+  gem name, path: "#{RAILS_PATH}/#{name}"
+end
+
 gem "administrate-field-image"
 gem "faker"
 gem "front_matter_parser"
