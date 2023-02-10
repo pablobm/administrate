@@ -5,6 +5,9 @@ require "generators/administrate/routes/routes_generator"
 
 describe Administrate::Generators::RoutesGenerator, :generator do
   before { stub_generator_dependencies }
+  before {
+    ActiveSupport::DescendantsTracker.clear([ActiveRecord::Base])
+  }
 
   after { reset_routes }
 
