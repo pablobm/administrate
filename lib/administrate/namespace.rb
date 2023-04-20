@@ -1,3 +1,5 @@
+require "administrate/namespace/resource"
+
 module Administrate
   class Namespace
     def initialize(namespace)
