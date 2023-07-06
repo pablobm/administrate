@@ -3,6 +3,9 @@ set -e
 
 VERSION=$(ruby -r ./lib/administrate/version.rb -e "puts Administrate::VERSION")
 echo "Version $VERSION"
+bundle exec rake assets:precompile
+rm -rf public/assets/ && mkdir -p public/assets/
+mv spec/example_app/public/assets/administrate  public/assets/
 gem build administrate.gemspec
 gem install administrate-${VERSION}.gem
 
