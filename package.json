@@ -7,7 +7,11 @@
     "selectize": "^0.12.6"
   },
   "scripts": {
-    "build": "esbuild app/javascript/administrate/application.js --bundle --sourcemap --minify --outdir=app/assets/builds/administrate --public-path=/assets/administrate",
+    "build-dev": "esbuild app/javascript/administrate/application.js --bundle --sourcemap --outdir=app/assets/builds/administrate --public-path=/assets/administrate",
+    "build-dev:css": "yarn build-dev:css:application && yarn build-dev:css:docs",
+    "build-dev:css:application": "sass ./app/assets/stylesheets/administrate/application.sass.scss:./app/assets/builds/administrate/application.css --source-map --style=expanded --load-path=node_modules",
+    "build-dev:css:docs": "sass ./app/assets/stylesheets/administrate/docs.scss:./app/assets/builds/administrate/docs.css --source-map --style=expanded --load-path=node_modules",
+    "build": "esbuild app/javascript/administrate/application.js --bundle --minify --sourcemap --outdir=app/assets/builds/administrate --public-path=/assets/administrate",
     "build:css": "yarn build:css:application && yarn build:css:docs",
     "build:css:application": "sass ./app/assets/stylesheets/administrate/application.sass.scss:./app/assets/builds/administrate/application.css --source-map --style=compressed --load-path=node_modules",
     "build:css:docs": "sass ./app/assets/stylesheets/administrate/docs.scss:./app/assets/builds/administrate/docs.css --source-map --style=compressed --load-path=node_modules"
