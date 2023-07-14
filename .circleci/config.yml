@@ -19,20 +19,35 @@ commands:
       # Install bundler
       - run: gem install bundler:2.3.5
 
-      # Restore Cached Dependencies
+      # Restore Ruby Cached Dependencies
       - restore_cache:
           name: Restore bundle cache
           key: administrate-{{ checksum "Gemfile.lock" }}
 
-      # Bundle install dependencies
+      # Install Ruby dependencies
       - run: bundle install --path vendor/bundle
 
-      # Cache Dependencies
+      # Cache Ruby Dependencies
       - save_cache:
           name: Store bundle cache
           key: administrate-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+
+      # Restore Node Cached Dependencies
+      - restore_cache:
+          name: Restore node cache
+          key: administrate-{{ checksum yarn.lock" }}
+
+      # Install Node dependencies
+      - run: yarn install
+
+      # Cache Node Dependencies
+      - save_cache:
+          name: Store node cache
+          key: administrate-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
 
       # Wait for DB
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -43,6 +58,9 @@ commands:
 
       # Setup the database
       - run: bundle exec rake db:setup
+
+      # Build assets
+      - run: yarn run build-dev && yarn run build-dev:css
 
       # Run the tests
       - run: bundle exec rspec
