@@ -4,7 +4,7 @@ module Administrate
   module Generators
     module Assets
       class JavascriptsGenerator < Rails::Generators::Base
-        JAVASCRIPTS_PATH = "app/assets/javascripts/administrate"
+        JAVASCRIPTS_PATH = "app/javascript/administrate"
 
         source_root File.expand_path("../../../../../", __FILE__)
 
