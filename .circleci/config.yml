@@ -33,7 +33,7 @@ commands:
       # Restore Node Cached Dependencies
       - restore_cache:
           name: Restore node cache
-          key: administrate-{{ checksum yarn.lock" }}
+          key: administrate-{{ checksum "yarn.lock" }}
 
       # Install Node dependencies
       - run: yarn install
