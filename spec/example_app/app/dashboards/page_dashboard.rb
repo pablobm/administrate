@@ -1,4 +1,5 @@
 require "administrate/base_dashboard"
+require "administrate/field/date_dropdown"
 
 class PageDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
@@ -6,6 +7,7 @@ class PageDashboard < Administrate::BaseDashboard
     id: Field::Number,
     title: Field::String,
     body: Field::Text,
+    published_on: Field::DateDropdown,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -13,6 +15,7 @@ class PageDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     id
     title
+    published_on
   ].freeze
 
   SHOW_PAGE_ATTRIBUTES = %i[
@@ -20,6 +23,7 @@ class PageDashboard < Administrate::BaseDashboard
     id
     title
     body
+    published_on
     created_at
     updated_at
   ].freeze
@@ -28,6 +32,7 @@ class PageDashboard < Administrate::BaseDashboard
     product
     title
     body
+    published_on
   ].freeze
 
   COLLECTION_FILTERS = {}.freeze
