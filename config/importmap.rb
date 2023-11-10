@@ -1,6 +1,8 @@
 # Pin npm packages by running ./bin/importmap
 
-pin_all_from "app/javascript/administrate/components", under: "components"
+pin "administrate/components/table.js", to: "administrate/components/table.js"
+pin "administrate/components/associative.js", to: "administrate/components/associative.js"
+pin "administrate/components/select.js", to: "administrate/components/select.js"
 
 pin "administrate/application", preload: true
 

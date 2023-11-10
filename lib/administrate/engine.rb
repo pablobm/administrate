@@ -22,8 +22,8 @@ module Administrate
     @@javascripts = []
     @@stylesheets = []
 
-    initializer "administrate.importmap" do |app|
-      app.importmap.draw root.join("config/importmap.rb")
+    initializer "administrate.importmap", before: "importmap" do |app|
+      app.config.importmap.paths << root.join("config/importmap.rb")
     end
 
     initializer "administrate.assets.precompile" do |app|
