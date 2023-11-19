@@ -3,6 +3,8 @@ ruby "3.2.2" unless ENV["CI"]
 
 gemspec
 
+gem "rails", "~>6.1.0"
+
 gem "administrate-field-image"
 gem "faker"
 gem "front_matter_parser"
