@@ -113,6 +113,9 @@ association `belongs_to :country`, from your model.
 
 **Field::HasMany**
 
+`:collection_attributes` - Set the columns to display in the show view. 
+Default is COLLECTION_ATTRIBUTES in dashboard.
+
 `:limit` - The number of resources (paginated) to display in the show view. To disable pagination,
 set this to `0` or `false`. Default is `5`.
 
@@ -168,8 +171,7 @@ more results than expected. Default is `false`.
 and works by  by passing a hash that includes the formatter (`formatter`) and
 the options for the formatter (`formatter_options`). Defaults to the locale's
 delimiter when `formatter_options` does not include a `delimiter`. See the
-example below. Note that currently only
-`ActiveSupport::NumberHelper.number_to_delimited` is supported.
+example below. All helpers from `ActiveSupport::NumberHelper` are supported.
 
 For example, you might use the following to display U.S. currency:
 
