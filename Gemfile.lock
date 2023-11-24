@@ -139,6 +139,7 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
+    ffi (1.16.3)
     formulaic (0.4.1)
       activesupport
       capybara
@@ -279,6 +280,14 @@ GEM
     rspec-support (3.12.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     selenium-webdriver (4.15.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -298,6 +307,7 @@ GEM
     terminal-table (3.0.2)
       unicode-display_width (>= 1.1.1, < 3)
     thor (1.2.2)
+    tilt (2.3.0)
     timecop (0.9.8)
     timeout (0.4.0)
     tzinfo (2.0.6)
@@ -350,6 +360,7 @@ DEPENDENCIES
   pundit
   rack-timeout
   redcarpet
+  sassc-rails
   selenium-webdriver
   sentry-raven
   shoulda-matchers
