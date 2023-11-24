@@ -3,10 +3,8 @@ set -e
 
 VERSION=$(ruby -r ./lib/administrate/version.rb -e "puts Administrate::VERSION")
 echo "Version $VERSION"
-yarn run build
-yarn run build:css
-gem build administrate.gemspec
-gem install administrate-${VERSION}.gem
+
+$(dirname "$0")/build_gem
 
 sed -i.bak "s/^gemspec$/gem \"administrate\", \"`echo $VERSION`\"/g" Gemfile
 rm Gemfile.bak

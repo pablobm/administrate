@@ -1,0 +1,8 @@
+# Exit if any subcommand fails
+set -e
+
+VERSION=$(ruby -r ./lib/administrate/version.rb -e "puts Administrate::VERSION")
+yarn run build
+yarn run build:css
+gem build administrate.gemspec
+
