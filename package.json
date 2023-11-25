@@ -7,8 +7,8 @@
     "selectize": "^0.12.6"
   },
   "scripts": {
-    "build-dev:js": "esbuild app/assets/javascripts/administrate/application.js --bundle --sourcemap --outdir=app/assets/builds/administrate --public-path=/assets/administrate",
-    "build:js": "yarn build-dev:js --minify",
+    "build-dev": "esbuild app/assets/javascripts/administrate/application.js --bundle --sourcemap --outdir=app/assets/builds/administrate --public-path=/assets/administrate",
+    "build": "yarn build-dev --minify",
     "build:css": "sass ./app/assets/stylesheets/administrate/application.scss:./app/assets/builds/administrate/application.css ./app/assets/stylesheets/administrate-internal/docs.scss:./app/assets/builds/administrate-internal/docs.css --source-map --load-path=node_modules --style=compressed",
     "build-dev:css": "yarn build:css --watch"
   }
