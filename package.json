@@ -1,7 +1,7 @@
 {
   "engines": {
-    "node": "18.17.0",
-    "yarn": "1.22.19"
+    "node": "18.15.0",
+    "yarn": "1.22.18"
   },
   "dependencies": {
     "esbuild": "^0.18.11",
