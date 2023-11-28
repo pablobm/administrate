@@ -60,7 +60,7 @@ commands:
       - run: bundle exec rake db:setup
 
       # Build assets
-      - run: yarn run build-dev:js && yarn run build-dev:css
+      - run: yarn run build && yarn run build:css
 
       # Run the tests
       - run: bundle exec rspec
