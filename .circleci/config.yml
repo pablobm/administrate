@@ -17,7 +17,7 @@ commands:
       - run: google-chrome --version
 
       # Install bundler
-      - run: gem install bundler:2.3.5
+      - run: gem install bundler:2.4.22
 
       # Restore Ruby Cached Dependencies
       - restore_cache:
@@ -69,27 +69,6 @@ default_job: &default_job
   working_directory: ~/administrate
 
 jobs:
-  ruby-27:
-    <<: *default_job
-    steps:
-      - shared_steps
-      # Run the tests against the versions of Rails that support Ruby 2.7
-      - run: bundle exec appraisal install
-      - run: bundle exec appraisal rails60 rspec
-      - run: bundle exec appraisal rails61 rspec
-      - run: bundle exec appraisal rails70 rspec
-    docker:
-      - image: cimg/ruby:2.7-browsers
-        environment:
-          PGHOST: localhost
-          PGUSER: administrate
-          RAILS_ENV: test
-      - image: cimg/postgres:15.1
-        environment:
-          POSTGRES_USER: administrate
-          POSTGRES_DB: ruby27
-          POSTGRES_PASSWORD: ""
-
   ruby-30:
     <<: *default_job
     steps:
@@ -158,4 +137,3 @@ workflows:
       - ruby-32
       - ruby-31
       - ruby-30
-      - ruby-27
