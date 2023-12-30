@@ -29,9 +29,6 @@
 /node_modules
 /public
 
-/app/assets/builds/*
-!/app/assets/builds/.keep
-
 /tags
 pkg
 *.ipr
