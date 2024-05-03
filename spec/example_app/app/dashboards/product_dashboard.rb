@@ -19,7 +19,7 @@ class ProductDashboard < Administrate::BaseDashboard
     description: Field::Text,
     image_url: Field::Url,
     name: Field::String,
-    pages: Field::HasMany,
+    pages: Field::HasMany.with_options(scope: ->(_scope, field) { field.page.context.pundit_user.products }),
     price: Field::Number.with_options(prefix: "$", decimals: 2),
     product_meta_tag: Field::HasOne.with_options(order: "meta_title"),
     release_year: Field::Select.with_options(

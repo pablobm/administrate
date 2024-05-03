@@ -53,7 +53,7 @@ module Administrate
       end
 
       def to_partial_path
-        "/fields/#{self.class.field_type}/#{page}"
+        "/fields/#{self.class.field_type}/#{page.page_type}"
       end
 
       def required?

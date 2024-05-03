@@ -97,12 +97,18 @@ module Administrate
       end
 
       def candidate_resources
+        scope = associated_class.all
+
         if options.key?(:includes)
           includes = options.fetch(:includes)
-          associated_class.includes(*includes).all
-        else
-          associated_class.all
+          scope = scope.includes(*includes)
         end
+
+        if options[:scope]
+          scope = options[:scope].call(scope, self)
+        end
+
+        scope
       end
 
       def display_candidate_resource(resource)

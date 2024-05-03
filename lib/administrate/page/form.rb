@@ -10,6 +10,10 @@ module Administrate
 
       attr_reader :resource
 
+      def page_type
+        :form
+      end
+
       def attributes(action = nil)
         attributes = dashboard.form_attributes(action, context)
 
@@ -19,7 +23,7 @@ module Administrate
 
         attributes.transform_values do |attrs|
           attrs.map do |attribute|
-            attribute_field(dashboard, resource, attribute, :form)
+            attribute_field(dashboard, resource, attribute, self)
           end
         end
       end

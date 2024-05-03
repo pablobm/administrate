@@ -3,6 +3,10 @@ require_relative "base"
 module Administrate
   module Page
     class Collection < Page::Base
+      def page_type
+        :index
+      end
+
       def attribute_names
         options.fetch(:collection_attributes, nil) ||
           dashboard.collection_attributes
@@ -10,7 +14,7 @@ module Administrate
 
       def attributes_for(resource)
         attribute_names.map do |attr_name|
-          attribute_field(dashboard, resource, attr_name, :index)
+          attribute_field(dashboard, resource, attr_name, self)
         end
       end
 
