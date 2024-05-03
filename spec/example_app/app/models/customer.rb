@@ -1,5 +1,7 @@
 class Customer < ApplicationRecord
   has_many :orders, dependent: :destroy
+  has_many :line_items, through: :orders
+  has_many :products, through: :line_items
   belongs_to(
     :territory,
     class_name: "Country",

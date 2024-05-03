@@ -10,6 +10,10 @@ module Administrate
 
       attr_reader :resource
 
+      def page_type
+        :index
+      end
+
       def page_title
         dashboard.display_resource(resource)
       end
@@ -23,7 +27,7 @@ module Administrate
 
         attributes.transform_values do |attrs|
           attrs.map do |attr_name|
-            attribute_field(dashboard, resource, attr_name, :show)
+            attribute_field(dashboard, resource, attr_name, self)
           end
         end
       end
