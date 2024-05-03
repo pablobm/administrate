@@ -30,10 +30,8 @@ module Administrate
     end
 
     def new
-      resource = new_resource.tap do |resource|
-        authorize_resource(resource)
-        contextualize_resource(resource)
-      end
+      resource = new_resource
+      authorize_resource(resource)
 
       page = Administrate::Page::Form.new(dashboard, resource)
       page.context = self
@@ -51,10 +49,8 @@ module Administrate
     end
 
     def create
-      resource = new_resource(resource_params).tap do |resource|
-        authorize_resource(resource)
-        contextualize_resource(resource)
-      end
+      resource = new_resource(resource_params)
+      authorize_resource(resource)
 
       if resource.save
         yield(resource) if block_given?
@@ -201,7 +197,6 @@ module Administrate
     def requested_resource
       @requested_resource ||= find_resource(params[:id]).tap do |resource|
         authorize_resource(resource)
-        contextualize_resource(resource)
       end
     end
 
@@ -306,12 +301,6 @@ module Administrate
         )
       end
     end
-
-    # Override this if you want to contextualize the resource differently.
-    #
-    # @param resource A resource to be contextualized.
-    # @return nothing
-    def contextualize_resource(resource); end
 
     def paginate_resources(resources)
       resources.page(params[:_page]).per(records_per_page)
