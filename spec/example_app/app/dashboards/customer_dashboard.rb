@@ -39,4 +39,20 @@ class CustomerDashboard < Administrate::BaseDashboard
   def display_resource(customer)
     customer.name
   end
+
+  def form_attributes(action, context)
+    if context.pundit_user.admin?
+      super
+    else
+      super - [:kind]
+    end
+  end
+
+  def permitted_attributes(action, context)
+    if context.pundit_user.admin?
+      super
+    else
+      super - [:kind]
+    end
+  end
 end
