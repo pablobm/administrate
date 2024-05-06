@@ -32,6 +32,10 @@ module Administrate
         attr
       end
 
+      def self.read_value(resource, attribute_name)
+        resource.public_send(attribute_name)
+      end
+
       def initialize(attribute, data, page, options = {})
         @attribute = attribute
         @data = data

@@ -10,6 +10,10 @@ module Administrate
 
       attr_reader :deferred_class, :options
 
+      def read_value(resource, attribute_name)
+        @deferred_class.read_value(resource, attribute_name)
+      end
+
       def new(*args)
         new_options = args.last.respond_to?(:merge) ? args.pop : {}
         deferred_class.new(*args, options.merge(new_options))

@@ -17,7 +17,8 @@ class CustomerDashboard < Administrate::BaseDashboard
       searchable_fields: ["name"],
       include_blank: true
     ),
-    password: Field::Password
+    password: Field::Password,
+    download_link: Field::Url,
   }
 
   COLLECTION_ATTRIBUTES = ATTRIBUTE_TYPES.keys - %i[created_at updated_at]

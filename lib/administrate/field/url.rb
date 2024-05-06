@@ -7,6 +7,17 @@ module Administrate
         true
       end
 
+      def self.read_value(object, attribute)
+        if attribute == :download_link
+          # Ideally this would be a different field type, but just for
+          # a quick prototype I'm using the Url field and using
+          # this little dirty condition to display a different value.
+          "This is a download link"
+        else
+          super
+        end
+      end
+
       def truncate
         data.to_s[0...truncation_length]
       end
