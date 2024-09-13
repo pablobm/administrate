@@ -7,6 +7,7 @@ class CustomerDashboard < Administrate::BaseDashboard
     email: Field::Email,
     email_subscriber: Field::Boolean,
     lifetime_value: Field::Number.with_options(prefix: "$", decimals: 2),
+    foobar: Field::Foobar,
     name: Field::String,
     nickname: Field::String.with_options(
       getter: ->(field) { "Mr. #{field.resource.name}man" if field.resource.name.present? },
