@@ -7,7 +7,7 @@ module Administrate
         false
       end
 
-      def render
+      def foobar
         "This is a Foobar: #{resource.inspect}"
       end
     end
