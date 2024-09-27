@@ -9,10 +9,6 @@ class CustomerDashboard < Administrate::BaseDashboard
     lifetime_value: Field::Number.with_options(prefix: "$", decimals: 2),
     foobar: Field::Foobar,
     name: Field::String,
-    nickname: Field::String.with_options(
-      getter: ->(field) { "Mr. #{field.resource.name}man" if field.resource.name.present? },
-      searchable: false
-    ),
     orders: Field::HasMany.with_options(limit: 2, sort_by: :id),
     log_entries: Field::HasManyVariant.with_options(limit: 2, sort_by: :id),
     updated_at: Field::DateTime,
