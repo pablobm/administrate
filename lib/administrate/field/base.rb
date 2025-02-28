@@ -39,13 +39,13 @@ module Administrate
       def self.partial_prefixes(look:)
         @partial_prefixes ||=
           if superclass.respond_to?(:partial_prefixes)
-            local_partial_prefixes + superclass.partial_prefixes(look:)
+            local_partial_prefixes(look:) + superclass.partial_prefixes(look:)
           else
-            local_partial_prefixes
+            local_partial_prefixes(look:)
           end
       end
 
-      def self.local_partial_prefixes
+      def self.local_partial_prefixes(look:)
         ["fields/#{field_type}"]
       end
 
