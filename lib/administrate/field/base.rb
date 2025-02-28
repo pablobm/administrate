@@ -37,16 +37,19 @@ module Administrate
       end
 
       def self.partial_prefixes(look:)
-        @partial_prefixes ||=
-          if superclass.respond_to?(:partial_prefixes)
-            local_partial_prefixes(look:) + superclass.partial_prefixes(look:)
-          else
-            local_partial_prefixes(look:)
-          end
+        if superclass.respond_to?(:partial_prefixes)
+          local_partial_prefixes(look:) + superclass.partial_prefixes(look:)
+        else
+          local_partial_prefixes(look:)
+        end
       end
 
       def self.local_partial_prefixes(look:)
-        ["fields/#{field_type}"]
+        if look
+          ["fields/#{field_type}/looks/#{look}", "fields/#{field_type}"]
+        else
+          ["fields/#{field_type}"]
+        end
       end
 
       def initialize(attribute, data, page, options = {})
@@ -83,8 +86,8 @@ module Administrate
         end
       end
 
-      def partial_prefixes(look: nil)
-        self.class.partial_prefixes(look:)
+      def partial_prefixes
+        self.class.partial_prefixes(look: options[:look])
       end
 
       def required?
