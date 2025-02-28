@@ -1,4 +1,5 @@
 require "administrate/base_dashboard"
+require "administrate/field/string_red"
 
 class ProductMetaTagDashboard < Administrate::BaseDashboard
   ATTRIBUTES = [
@@ -9,7 +10,7 @@ class ProductMetaTagDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    meta_title: Field::String,
+    meta_title: Field::StringRed,
     meta_description: Field::String
   }.freeze
 
