@@ -6,7 +6,7 @@ class OrderDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     address_line_one: Field::String,
-    address_line_two: Field::String,
+    address_line_two: Field::String.with_options(look: :red),
     address_city: Field::String,
     address_state: Field::String,
     address_zip: Field::String,

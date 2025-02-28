@@ -36,10 +36,10 @@ module Administrate
         attr
       end
 
-      def self.partial_prefixes
+      def self.partial_prefixes(look:)
         @partial_prefixes ||=
           if superclass.respond_to?(:partial_prefixes)
-            local_partial_prefixes + superclass.partial_prefixes
+            local_partial_prefixes + superclass.partial_prefixes(look:)
           else
             local_partial_prefixes
           end
@@ -83,8 +83,8 @@ module Administrate
         end
       end
 
-      def partial_prefixes
-        self.class.partial_prefixes
+      def partial_prefixes(look: nil)
+        self.class.partial_prefixes(look:)
       end
 
       def required?
