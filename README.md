@@ -4,9 +4,7 @@
 [![Gem Version](https://badge.fury.io/rb/administrate.svg)](https://badge.fury.io/rb/administrate)
 
 A framework for creating flexible, powerful admin dashboards in Rails.
-[Try the demo][demo].
-
-[demo]: https://administrate-demo.herokuapp.com/admin
+[Try the demo](/demo).
 
 [release notes]: https://github.com/thoughtbot/administrate/releases
 
