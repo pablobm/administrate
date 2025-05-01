@@ -1,0 +1,4 @@
+.field-unit--rails-date-select select {
+  display: inline;
+  width: inherit;
+}

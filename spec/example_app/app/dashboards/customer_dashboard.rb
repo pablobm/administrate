@@ -1,4 +1,5 @@
 require "administrate/field/has_many_variant"
+require "administrate/field/rails_date_select"
 require "administrate/base_dashboard"
 
 class CustomerDashboard < Administrate::BaseDashboard
@@ -18,6 +19,7 @@ class CustomerDashboard < Administrate::BaseDashboard
       include_blank: true
     ),
     example_time: Field::Time,
+    born_on: Field::RailsDateSelect,
     password: Field::Password
   }
 
@@ -39,6 +41,7 @@ class CustomerDashboard < Administrate::BaseDashboard
     :kind,
     :territory,
     :example_time,
+    :born_on,
     :password
   ].freeze
 

@@ -1,0 +1,6 @@
+<div class="field-unit__label">
+  <%= f.label field.attribute %>
+</div>
+<div class="field-unit__field">
+  <%= f.date_select field.attribute, start_year: 1900, end_year: Date.today.year, include_blank: true %>
+</div>
