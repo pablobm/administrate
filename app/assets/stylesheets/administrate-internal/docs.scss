@@ -75,21 +75,4 @@ code {
   font-family: "Source Code Pro";
   font-size: 0.8rem;
   padding: 0.4em 0.2em 0;
-
-  &.hljs {
-    background-color: var(--code-black);
-    color: var(--code-white);
-    padding-left: 1rem;
-
-    .hljs-string { color: var(--code-green); }
-    .hljs-subst { color: var(--code-white); }
-    .hljs-constant { color: var(--code-blue); }
-    .hljs-symbol { color: var(--code-red); }
-    .hljs-keyword { color: var(--code-yellow); }
-
-    .hljs-title,
-    .hljs-parent { color: var(--code-blue); }
-
-    .hljs-tag { color: var(--code-yellow); }
-  }
 }

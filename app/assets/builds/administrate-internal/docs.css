@@ -71,32 +71,5 @@ code {
   font-size: 0.8rem;
   padding: 0.4em 0.2em 0;
 }
-code.hljs {
-  background-color: var(--code-black);
-  color: var(--code-white);
-  padding-left: 1rem;
-}
-code.hljs .hljs-string {
-  color: var(--code-green);
-}
-code.hljs .hljs-subst {
-  color: var(--code-white);
-}
-code.hljs .hljs-constant {
-  color: var(--code-blue);
-}
-code.hljs .hljs-symbol {
-  color: var(--code-red);
-}
-code.hljs .hljs-keyword {
-  color: var(--code-yellow);
-}
-code.hljs .hljs-title,
-code.hljs .hljs-parent {
-  color: var(--code-blue);
-}
-code.hljs .hljs-tag {
-  color: var(--code-yellow);
-}
 
 /*# sourceMappingURL=docs.css.map */
